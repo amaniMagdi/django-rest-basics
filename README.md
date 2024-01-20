@@ -7,4 +7,6 @@ Build REST API With Django.
 
 >   REST Framework Function Based API Views 
 
->   REST Framework api_view() Decorator      
+>   REST Framework api_view() Decorator  
+
+>    REST Class Based API Views
