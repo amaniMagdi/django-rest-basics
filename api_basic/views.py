@@ -9,6 +9,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework import generics, mixins
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication , BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 '''
@@ -152,13 +154,15 @@ class GenericAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Crea
 mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
     serializer_class = ArticleSerializer
     queryset = Article.objects.all()
-
     lookup_field = 'id'
+    #authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, id= None):
-        return self.list(request)
         if id: 
             return self.retrieve(request)
+        return self.list(request)
     
     def post(self, request):
         return self.create(request)

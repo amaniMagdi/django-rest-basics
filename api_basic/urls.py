@@ -19,5 +19,6 @@ urlpatterns = [
     #########
     # REST Generic Views & Mixins
     #########
-    path('generic/article/<int:id>/', GenericAPIView.as_view())
+    path('generic/article/<int:id>/', GenericAPIView.as_view()),
+    path('generic/article/', GenericAPIView.as_view())
 ]
