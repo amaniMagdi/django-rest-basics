@@ -11,6 +11,8 @@ from rest_framework.views import APIView
 from rest_framework import generics, mixins
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication , BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
 
 
 '''
@@ -172,6 +174,39 @@ mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
 
     def delete(self, request, id):
         return self.destroy(request, id)
+    
+"""
+REST Framework Viewsets
+"""
+class ArticleViewSet(viewsets.ViewSet):
+
+    def list(self, request):
+        queryset = Article.objects.all()
+        serializer = ArticleSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
+    def retrieve(self, request, pk=None):
+        queryset = Article.objects.all()
+        article = get_object_or_404(queryset, pk=pk)
+        serializer = ArticleSerializer(article)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        serializer = ArticleSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def update(self, request, pk=None):
+        article = Article.objects.get(pk=pk)
+        serializer = ArticleSerializer(article, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
