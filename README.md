@@ -14,3 +14,9 @@ Build REST API With Django.
 >   REST Generic Views & Mixins 
 
 >   REST Framework Authentication
+
+>    REST Framework Viewsets & Routers
+
+>    REST Framework Generic Viewsets
+
+>   REST Framework Modal Viewsets
