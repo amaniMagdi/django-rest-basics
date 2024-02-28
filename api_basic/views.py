@@ -179,7 +179,7 @@ mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
 REST Framework Viewsets
 """
 class ArticleViewSet(viewsets.ViewSet):
-
+# if viewsets.ViewSet is used, then you should type each method you will use (list, retrieve, create, update)
     def list(self, request):
         queryset = Article.objects.all()
         serializer = ArticleSerializer(queryset, many=True)
@@ -191,7 +191,7 @@ class ArticleViewSet(viewsets.ViewSet):
         serializer = ArticleSerializer(article)
         return Response(serializer.data)
     
-    def post(self, request):
+    def create(self, request):
         serializer = ArticleSerializer(data=request.data)
 
         if serializer.is_valid():
