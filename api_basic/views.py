@@ -210,13 +210,16 @@ REST Framework Viewsets
 """
 REST Framework Generic Viewsets
 """
-class ArticleViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                     mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+# class ArticleViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin,
+#                      mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+#     serializer_class = serializer_class = ArticleSerializer
+#     queryset = Article.objects.all()
+"""
+REST Framework Modal Viewsets
+"""
+class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = serializer_class = ArticleSerializer
     queryset = Article.objects.all()
-
-
-
     
 
 
