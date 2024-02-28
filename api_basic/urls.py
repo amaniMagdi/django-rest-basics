@@ -2,7 +2,8 @@
 from django.urls import path, include
 #from .views import article_list, article_detail, ArticleAPIView, ArticleDetails
 #from .views import ArticleAPIView, ArticleDetails
-from .views import GenericAPIView, ArticleViewSet
+#from .views import GenericAPIView
+from .views import ArticleViewSet
 from rest_framework.routers import DefaultRouter
 
 ########
@@ -29,8 +30,8 @@ urlpatterns = [
     #########
     # REST Generic Views & Mixins
     #########
-    path('generic/article/<int:id>/', GenericAPIView.as_view()),
-    path('generic/article/', GenericAPIView.as_view()),
+    # path('generic/article/<int:id>/', GenericAPIView.as_view()),
+    # path('generic/article/', GenericAPIView.as_view()),
 
     ########
     #  REST Framework Viewsets & Routers 

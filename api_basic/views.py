@@ -152,62 +152,68 @@ from django.shortcuts import get_object_or_404
 '''
 REST Generic Views & Mixins   
 '''
-class GenericAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin,
-mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
-    serializer_class = ArticleSerializer
-    queryset = Article.objects.all()
-    lookup_field = 'id'
-    #authentication_classes = [SessionAuthentication, BasicAuthentication]
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+# class GenericAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin,
+# mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
+#     serializer_class = ArticleSerializer
+#     queryset = Article.objects.all()
+#     lookup_field = 'id'
+#     #authentication_classes = [SessionAuthentication, BasicAuthentication]
+#     authentication_classes = [TokenAuthentication]
+#     permission_classes = [IsAuthenticated]
 
-    def get(self, request, id= None):
-        if id: 
-            return self.retrieve(request)
-        return self.list(request)
+#     def get(self, request, id= None):
+#         if id: 
+#             return self.retrieve(request)
+#         return self.list(request)
     
-    def post(self, request):
-        return self.create(request)
+#     def post(self, request):
+#         return self.create(request)
 
-    def put(self, request, id=None):
-        return self.update(request, id)
+#     def put(self, request, id=None):
+#         return self.update(request, id)
 
-    def delete(self, request, id):
-        return self.destroy(request, id)
+#     def delete(self, request, id):
+#         return self.destroy(request, id)
     
 """
 REST Framework Viewsets
 """
-class ArticleViewSet(viewsets.ViewSet):
-# if viewsets.ViewSet is used, then you should type each method you will use (list, retrieve, create, update)
-    def list(self, request):
-        queryset = Article.objects.all()
-        serializer = ArticleSerializer(queryset, many=True)
-        return Response(serializer.data)
+# class ArticleViewSet(viewsets.ViewSet):
+# # if viewsets.ViewSet is used, then you should type each method you will use (list, retrieve, create, update)
+#     def list(self, request):
+#         queryset = Article.objects.all()
+#         serializer = ArticleSerializer(queryset, many=True)
+#         return Response(serializer.data)
     
-    def retrieve(self, request, pk=None):
-        queryset = Article.objects.all()
-        article = get_object_or_404(queryset, pk=pk)
-        serializer = ArticleSerializer(article)
-        return Response(serializer.data)
+#     def retrieve(self, request, pk=None):
+#         queryset = Article.objects.all()
+#         article = get_object_or_404(queryset, pk=pk)
+#         serializer = ArticleSerializer(article)
+#         return Response(serializer.data)
     
-    def create(self, request):
-        serializer = ArticleSerializer(data=request.data)
+#     def create(self, request):
+#         serializer = ArticleSerializer(data=request.data)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def update(self, request, pk=None):
-        article = Article.objects.get(pk=pk)
-        serializer = ArticleSerializer(article, data=request.data)
+#     def update(self, request, pk=None):
+#         article = Article.objects.get(pk=pk)
+#         serializer = ArticleSerializer(article, data=request.data)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+"""
+REST Framework Generic Viewsets
+"""
+class ArticleViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                     mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+    serializer_class = serializer_class = ArticleSerializer
+    queryset = Article.objects.all()
 
 
 
